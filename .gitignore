@@ -1,6 +1,7 @@
 .idea/
 .claude/scheduled_tasks.lock
 .claude/*.lock
+*.local.md
 __pycache__/
 *.pyc
 .venv/
