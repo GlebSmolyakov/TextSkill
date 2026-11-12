@@ -5,7 +5,7 @@ description: Используй этот скилл когда пользова�
 
 Прочитай `writing-rules.md` и `mosty.md` из корня проекта, это база универсальных правил: лексика и ритм в одном, честность связи между утверждениями в другом.
 
-Если переписываемый текст Telegram-пост, дополнительно прочитай `.claude/skills/write-post/SKILL.md`.
+Если переписываемый текст Telegram-пост, дополнительно прочитай `.claude/skills/write-post/SKILL.md` и `.claude/skills/write-post/check.md`. Если рабочее сообщение коллеге, `.claude/skills/write-message/SKILL.md` и его `check.md`.
 Если статья / лонгрид / туториал, дополнительно прочитай `.claude/skills/write-article/SKILL.md`.
 Если README для GitHub, дополнительно прочитай `.claude/skills/write-readme/SKILL.md`.
 Если лендинг → `write-landing`, КП → `write-kp`, письмо или рассылка → `write-email` (у всех живой авторский голос, как у поста и статьи).
