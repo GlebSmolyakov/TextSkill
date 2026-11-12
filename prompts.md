@@ -1,10 +1,10 @@
 # Промты для обычного чата
 
-Если работаешь не в Claude Code, а в обычном чате: общий принцип один, `writing-rules.md` и `mosty.md` как база для любого жанра, плюс нужный форматный файл из `.claude/skills/`. Ниже шесть готовых шаблонов, каждый самодостаточный, копируется целиком.
+Если работаешь не в Claude Code, а в обычном чате, общий принцип один: `postroenie.md` и `mosty.md` до текста, нужный форматный файл из `.claude/skills/`, а `writing-rules.md` для проверки черновика. Ниже шесть готовых шаблонов, каждый самодостаточный, копируется целиком.
 
 **Пост для Telegram**
 ```
-Используй правила из writing-rules.md и mosty.md как базу.
+Строй текст по postroenie.md и mosty.md, готовый черновик проверь по writing-rules.md.
 Дополнительно: .claude/skills/write-post/SKILL.md.
 
 Тема: [тема]
@@ -15,7 +15,7 @@
 
 **Статья**
 ```
-Используй правила из writing-rules.md и mosty.md как базу.
+Строй текст по postroenie.md и mosty.md, готовый черновик проверь по writing-rules.md.
 Дополнительно: .claude/skills/write-article/SKILL.md.
 
 Тема: [тема]
@@ -27,7 +27,7 @@
 
 **Документация**
 ```
-Используй writing-rules.md и mosty.md как базу (mosty.md override регистра не касается).
+Строй текст по postroenie.md и mosty.md (mosty.md override регистра не касается), готовый черновик проверь по writing-rules.md.
 Дополнительно: .claude/skills/write-docs/SKILL.md (сначала примени блок override регистра).
 Если есть локальная редполитика репозитория с продуктовыми терминами, примени поверх.
 
@@ -37,7 +37,7 @@
 
 **Переписать**
 ```
-Используй writing-rules.md и mosty.md.
+Строй текст по postroenie.md и mosty.md, готовый черновик проверь по writing-rules.md.
 Если текст пост, добавь .claude/skills/write-post/SKILL.md.
 Если статья, добавь .claude/skills/write-article/SKILL.md.
 Если документация, добавь .claude/skills/write-docs/SKILL.md (его override отменяет правила ядра про позицию, финал, союзы, числа).
@@ -66,7 +66,7 @@
 
 **Аудит документации**
 ```
-Используй writing-rules.md, mosty.md и .claude/skills/write-docs/SKILL.md как правила.
+Строй текст по postroenie.md, mosty.md и .claude/skills/write-docs/SKILL.md, готовый черновик проверь по writing-rules.md.
 Методику и шкалу 1–10 бери из .claude/skills/audit-docs/SKILL.md.
 
 Тип страницы: [справочная статья / описание метода / страница параметра / обзорная]

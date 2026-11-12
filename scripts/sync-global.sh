@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # Публикует ядро и скиллы TextSkill в ~/.claude, чтобы они работали в любом проекте,
-# не только в этом репозитории. Перезапускай после любых правок writing-rules.md,
-# mosty.md, audit.md, voices/ или .claude/skills/*/SKILL.md, иначе глобальная копия устареет.
+# не только в этом репозитории. Перезапускай после любых правок postroenie.md, writing-rules.md,
+# mosty.md, audit.md, voices/, scripts/ или .claude/skills/, иначе глобальная копия устареет.
+# Скилл, который в ~/.claude/skills уже подключён симлинком на этот репозиторий, не трогается:
+# запись через симлинк переписала бы сам репозиторий.
 set -euo pipefail
 
 SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -11,29 +13,37 @@ SKILLS_DST="$HOME/.claude/skills"
 SKILLS=(
   audit-docs audit-text rewrite-text style-profile
   write-article write-docs write-email write-kp write-landing
-  write-post write-press-release write-readme write-resume write-vacancy
+  write-message write-post write-press-release write-readme write-resume write-vacancy
 )
 
 echo "Синхронизирую ядро в $CORE_DST"
-mkdir -p "$CORE_DST/voices"
+mkdir -p "$CORE_DST/voices" "$CORE_DST/scripts"
+cp "$SRC/postroenie.md" "$CORE_DST/postroenie.md"
 cp "$SRC/writing-rules.md" "$CORE_DST/writing-rules.md"
 cp "$SRC/mosty.md" "$CORE_DST/mosty.md"
 cp "$SRC/audit.md" "$CORE_DST/audit.md"
 cp "$SRC"/voices/*.md "$CORE_DST/voices/"
+cp "$SRC/scripts/lint_text.py" "$SRC/scripts/stoplist.txt" "$CORE_DST/scripts/"
 
-# В глобальном writing-rules.md нет "корня проекта" — self-хук на профиль голоса
+# В глобальном postroenie.md нет "корня проекта": хук на профиль голоса
 # должен указывать на фиксированный путь, иначе скиллы вне репозитория его не найдут.
 tmp="$(mktemp)"
 sed \
-  -e "s|в корне проекта есть файл \`style-profile.local.md\`|есть файл \`$CORE_DST/style-profile.local.md\`|g" \
-  "$CORE_DST/writing-rules.md" > "$tmp"
-mv "$tmp" "$CORE_DST/writing-rules.md"
+  -e "s|в корне проекта есть \`style-profile.local.md\`|есть \`$CORE_DST/style-profile.local.md\`|g" \
+  "$CORE_DST/postroenie.md" > "$tmp"
+mv "$tmp" "$CORE_DST/postroenie.md"
 
 echo "Синхронизирую ${#SKILLS[@]} скиллов в $SKILLS_DST"
 for name in "${SKILLS[@]}"; do
+  if [[ -L "$SKILLS_DST/$name" ]]; then
+    echo "  $name: симлинк, пропускаю"
+    continue
+  fi
   mkdir -p "$SKILLS_DST/$name"
+  [[ -f "$SRC/.claude/skills/$name/check.md" ]] && cp "$SRC/.claude/skills/$name/check.md" "$SKILLS_DST/$name/check.md"
   tmp="$(mktemp)"
   sed \
+    -e "s|\${CLAUDE_SKILL_DIR}/\.\./\.\./\.\./|$CORE_DST/|g" \
     -e "s|\`writing-rules.md\` и \`mosty.md\` из корня проекта|\`$CORE_DST/writing-rules.md\` и \`$CORE_DST/mosty.md\`|g" \
     -e "s|\`writing-rules.md\` и \`mosty.md\` из корня,|\`$CORE_DST/writing-rules.md\` и \`$CORE_DST/mosty.md\`,|g" \
     -e "s|\`writing-rules.md\` и \`mosty.md\`, чтобы|\`$CORE_DST/writing-rules.md\` и \`$CORE_DST/mosty.md\`, чтобы|g" \
