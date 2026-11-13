@@ -105,6 +105,8 @@ cp TextSkill/scripts/{lint_text.py,stoplist.txt} /путь/к/твоему/пр�
 
 Поверх варианта 3: хочешь, чтобы Claude Code и в обычном чате отвечал коротко и по делу, подключи карточки из [`chat-style.md`](chat-style.md) SessionStart-хуком `scripts/chat_context.sh` (или скопируй раздел в `~/.claude/CLAUDE.md`).
 
+Codex читает те же скиллы. Подключи их симлинками в `~/.agents/skills/`, добавь `scripts/chat_context.sh SessionStart` в `SessionStart` в `~/.codex/hooks.json` и одобри новый хук в Codex: без одобрения Codex его не запускает. В `~/.codex/AGENTS.md` допиши, что `${CLAUDE_SKILL_DIR}/../../../` в скиллах означает корень TextSkill, потому что Codex эту переменную не подставляет.
+
 ## Использование
 
 В Claude Code открой проект и напиши, что нужно, скилл подхватится по описанию. «Напиши пост про провальную рекламную кампанию» — `write-post` спросит канал и тон, выдаст пост по правилам Telegram. Дал готовый текст и попросил проверить, похоже ли на AI, `audit-text` вернёт балл 1–10 и разбор по паттернам. «Настрой мой стиль» запускает `style-profile`: он соберёт `style-profile.local.md`, и дальше скиллы живого текста пишут твоим голосом, не усреднённым.
